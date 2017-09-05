@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="demo1">ni</div>
+	<div class="demo2"></div>
+</body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="page.js"></script>
+<script type="text/javascript">
+	$('.demo1').bootpag({
+	    total: 9,          
+	    page: 1,
+	    maxVisible:5
+	}).on("page", function(event, num){
+    		$(".demo2").html("Page " + num); 
+	});
+</script>
+</html>
