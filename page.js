@@ -1,10 +1,10 @@
 //leaps true点击的时候翻页，整倍的翻页，为false，一页一页的翻页
-	//firstLastUse 是否可以第一页直接点击到最后一页，最后一页点击直接到第一页
-	//last 为最后一个的html，
-	//first为第一个的html
-          //href分页链接模板（默认javascript:void(0);）
+//firstLastUse 是否可以第一页直接点击到最后一页，最后一页点击直接到第一页
+//last 为最后一个的html，
+//first为第一个的html
+//href分页链接模板（默认javascript:void(0);）
 ;(function($,window){
-	$.fn.bootpag = function(options){
+	$.fn.page = function(options){
 		var $owner = this,
 
 		//参数扩展
@@ -20,16 +20,13 @@
                 	     disabledClass: 'disabled',
 	                wrapClass: 'pagination'
 	            },
-	           //$owner.data('settings') || {},
+	         
             	options || {});
 
 	           //如果总共个数小于0 ，直接返回
             	if(settings.total <= 0) return this;
-
-            	//暂时不知道这句话什么意思
-            	//$owner.data('settings', settings);
-
-            	function renderPage($bootpag, page){
+            	
+            	function renderPage($page, page){
             		//获取当前页
             		page = parseInt(page, 10);
 
@@ -38,7 +35,7 @@
             		
             		//lp即使跳转到第几页
             		var lp,
-               		     $page = $bootpag.find('li');
+               		     $page = $page.find('li');
 
                		lp = (cur==1)?1: (cur-1)*settings.maxVisible;
                		var lfirst = $page.first();
@@ -71,16 +68,15 @@
 
        		return this.each(function(){
 
-            		var $bootpag, lp, me = $(this),
-               		 p = ['<ul class="', settings.wrapClass, ' bootpag">'];
+            		var $page, lp, me = $(this),
+               		 p = ['<ul class="', settings.wrapClass, ' page">'];
             		
             		if(settings.prev){
 		                p = p.concat(['<li data-lp="1" class="', settings.prevClass,
 		                       '"><a href="', href(1), '">', settings.prev, '</a></li>']);
 		           }
 		          
-		          
-            		//如果页数小于设置的最大的可见页数，就是最小的，否则是最大的
+		          //如果页数小于设置的最大的可见页数，就是最小的，否则是最大的
 		           for(var c = 1; c <=Math.min(settings.total, settings.maxVisible); c++){
 		                p = p.concat(['<li data-lp="', c, '"><a href="', href(c), '">', c, '</a></li>']);
 		            }
@@ -93,10 +89,10 @@
 		           }
 
            		p.push('</ul>');
-           		//删除存在的bootpag，保持唯一
-            		me.find('ul.bootpag').remove();
+           		//删除存在的page，保持唯一
+            		me.find('ul.page').remove();
             		me.append(p.join(''));
-            		$bootpag = me.find('ul.bootpag');
+            		$page = me.find('ul.page');
 
             		
             		me.find('li').click(function paginationClick(){
@@ -105,13 +101,9 @@
                     				return;
                 			}
                 			var page = parseInt(me.attr('data-lp'), 10);
-                			$owner.find('ul.bootpag').each(function(){
-                   			 	renderPage($(this), page);
-                			});
-                			
+                   			renderPage($('ul.page'), page);
                 			$owner.trigger('page', page);
            		 });
-            		renderPage($bootpag, settings.page);
         		});
     	}
 	
